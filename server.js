@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const cTable = require('console.table');
+const Choice = require('inquirer/lib/objects/choice');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -15,3 +16,32 @@ connection.connect((err) => {
     startEmployeeData();
 })
 
+const startEmployeeData = () => {
+    inquirer
+        .prompt({
+            name: 'AddViewUpdate',
+            type: 'list',
+            message: 'Would you like to Add, View or Update Data?',
+            choices: ['Add','View', 'Update']
+        })
+        .then((answer) => {
+            switch(answer.AddViewUpdate){
+                case 'Add':
+                    addData();
+                    break;
+                
+                case 'View':
+                    viewData();
+                    break;
+
+                case 'Update':
+                    updateData();
+                    break;
+
+                default:
+                    console.log(`Invalid action: ${answer.AddViewUpdate}`);
+                    break;
+
+            }
+        })
+}
