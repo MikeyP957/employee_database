@@ -9,3 +9,9 @@ const connection = mysql.createConnection({
     password: '',
     database: "employee_db"
 });
+
+connection.connect((err) => {
+    if(err) throw err;
+    startEmployeeData();
+})
+
