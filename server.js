@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const cTable = require('console.table');
-const Choice = require('inquirer/lib/objects/choice');
+// const Choice = require('inquirer/lib/objects/choice');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -45,3 +45,4 @@ const startEmployeeData = () => {
             }
         })
 }
+
