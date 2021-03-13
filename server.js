@@ -3,6 +3,11 @@ const mysql = require('mysql');
 const cTable = require('console.table');
 // const Choice = require('inquirer/lib/objects/choice');
 
+//imported functions
+const addData = require('./src/addData');
+const updateData = require('./src/updateData');
+const viewData = require('./src/viewData')
+
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
