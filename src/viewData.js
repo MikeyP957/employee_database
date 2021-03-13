@@ -29,4 +29,13 @@ const viewData = () => {
         })
 }
 
+const viewDepartment = () => {
+    console.log('you are viewing departments')
+}
+const viewRole = () => {
+    console.log('you are viewing roles')
+}
+const viewEmployee = () => {
+    console.log('you are viewing Employees')
+}
 module.exports = viewData 

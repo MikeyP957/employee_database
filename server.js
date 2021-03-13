@@ -12,13 +12,14 @@ const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'Bongbros#221',
     database: "employee_db"
 });
 
 connection.connect((err) => {
     if(err) throw err;
     startEmployeeData();
+    
 })
 
 const startEmployeeData = () => {
@@ -51,3 +52,4 @@ const startEmployeeData = () => {
         })
 }
 
+// startEmployeeData();

@@ -9,7 +9,7 @@ const updateData = () => {
             choices: ['Department','Role', 'Employee'] 
         })
         .then((answer) => {
-            switch(answer.add){
+            switch(answer.update){
                 case 'Department':
                     updateDepartment();
                     break;
@@ -28,5 +28,13 @@ const updateData = () => {
             }
         })
 }
-
+const updateDepartment = () => {
+    console.log('you are updating departments')
+}
+const updateRole = () => {
+    console.log('you are updating Roles')
+}
+const updateEmployee = () => {
+    console.log('you are updating Employees')
+}
 module.exports = updateData 

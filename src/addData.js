@@ -28,5 +28,13 @@ const addData = () => {
             }
         })
 }
-
+const addDepartment = () => {
+    console.log('you are adding a department')
+}
+const addRole = () => {
+    console.log('you are adding a Role')
+}
+const addEmployee = () => {
+    console.log('you are adding a Employee')
+}
 module.exports = addData 
