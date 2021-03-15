@@ -1,24 +1,34 @@
 const inquirer = require('inquirer');
+const mysql = require('mysql');
+const startEmployeeData = require('../server')
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'Bongbros#221',
+    database: "employee_db"
+});
 
 const viewData = () => {
     inquirer
         .prompt({
             name: 'view',
             type: 'list',
-            message: 'What would you like to view: department, role or employee?',
-            choices: ['Department','Role', 'Employee'] 
+            message: 'What would you like to view: departments, roles or employees?',
+            choices: ['Departments','Roles', 'Employees'] 
         })
         .then((answer) => {
             switch(answer.view){
-                case 'Department':
+                case 'Departments':
                     viewDepartment();
                     break;
 
-                case 'Role':
+                case 'Roles':
                     viewRole();
                     break;
 
-                case 'Employee':
+                case 'Employees':
                     viewEmployee();
                     break;
 
@@ -30,12 +40,21 @@ const viewData = () => {
 }
 
 const viewDepartment = () => {
-    console.log('you are viewing departments')
+    
 }
 const viewRole = () => {
     console.log('you are viewing roles')
 }
 const viewEmployee = () => {
-    console.log('you are viewing Employees')
+    connection.query(
+        `SELECT employee.first_name, employee.last_name, roles.title
+        FROM employee
+        INNER JOIN roles ON employee.role_id = roles.id
+        ORDER BY last_name asc`, 
+        (err, res) => {
+            if (err) throw err;
+            console.log(res)
+        }
+    )
 }
 module.exports = viewData 
