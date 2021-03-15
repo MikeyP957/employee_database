@@ -19,7 +19,6 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
     if(err) throw err;
     startEmployeeData();
-    
 })
 
 const startEmployeeData = () => {
@@ -27,7 +26,7 @@ const startEmployeeData = () => {
         .prompt({
             name: 'AddViewUpdate',
             type: 'list',
-            message: 'Would you like to Add, View or Update Data?',
+            message: 'Would you like to Add, View or Update Data or exit?',
             choices: ['Add','View', 'Update']
         })
         .then((answer) => {
@@ -44,6 +43,10 @@ const startEmployeeData = () => {
                     updateData();
                     break;
 
+                case 'Exit':
+                    connection.end();
+                    break;
+
                 default:
                     console.log(`Invalid action: ${answer.AddViewUpdate}`);
                     break;
@@ -51,5 +54,4 @@ const startEmployeeData = () => {
             }
         })
 }
-
-// startEmployeeData();
+module.exports = startEmployeeData; 

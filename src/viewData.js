@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const startEmployeeData = require('../server')
+const cTable = require('console.table');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -44,10 +45,12 @@ const viewDepartment = () => {
         `SELECT name FROM departments`, 
         (err, res) => {
             if (err) throw err;
-            console.log(res)
+            
+            console.table(res);
         }
     )
 }
+
 const viewRole = () => {
     connection.query(
         `SELECT roles.title, roles.salary, departments.name
@@ -56,7 +59,7 @@ const viewRole = () => {
         ORDER BY roles.id`, 
         (err, res) => {
             if (err) throw err;
-            console.log(res)
+            console.table(res);
         }
     )
 }
@@ -68,7 +71,7 @@ const viewEmployee = () => {
         ORDER BY last_name asc`, 
         (err, res) => {
             if (err) throw err;
-            console.log(res)
+            console.table(res);
         }
     )
 }
