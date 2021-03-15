@@ -40,10 +40,25 @@ const viewData = () => {
 }
 
 const viewDepartment = () => {
-    
+    connection.query(
+        `SELECT name FROM departments`, 
+        (err, res) => {
+            if (err) throw err;
+            console.log(res)
+        }
+    )
 }
 const viewRole = () => {
-    console.log('you are viewing roles')
+    connection.query(
+        `SELECT roles.title, roles.salary, departments.name
+        FROM roles
+        INNER JOIN departments ON roles.department_id = departments.id
+        ORDER BY roles.id`, 
+        (err, res) => {
+            if (err) throw err;
+            console.log(res)
+        }
+    )
 }
 const viewEmployee = () => {
     connection.query(
