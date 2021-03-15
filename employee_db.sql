@@ -10,14 +10,14 @@ CREATE TABLE departments (
     PRIMARY KEY (id)
 );
 CREATE TABLE roles (
-    id INTEGER(11) NOT NULL UNIQUE,
+    id INTEGER(11) NOT NULL AUTO_INCREMENT UNIQUE,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(15,3) NOT NULL,
     department_id INT NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE employee (
-    id INTEGER(11) NOT NULL UNIQUE,
+    id INTEGER(11) NOT NULL AUTO_INCREMENT UNIQUE,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     role_id INT NOT NULL,
