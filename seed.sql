@@ -1,11 +1,11 @@
 USE employee_db;
 
-INSERT INTO departments (id, name)
+INSERT INTO departments ( name)
 VALUES 
-(1, 'Management'),
-(2, 'Engineers'),
-(3, 'Office Staff'),
-(4, 'Human Resources');
+('Management'),
+('Engineers'),
+('Office Staff'),
+('Human Resources');
 
 INSERT INTO employee (first_name, last_name, role_id)
 VALUES 
