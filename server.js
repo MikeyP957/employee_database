@@ -55,7 +55,7 @@ const startEmployeeData = () => {
         })
 }
 
-module.exports = 
+
 
 // const getAllDepartments = () => {
 //     let allDepartments = connection.query(`SELECT name FROM departments`, (err, res) => {
