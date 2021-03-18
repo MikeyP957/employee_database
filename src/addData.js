@@ -5,21 +5,23 @@ const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'Bongbros#221',
     database: "employee_db"
 });
 //this is an array that gets all departments from mysql and returns as an array
-const getAllDepartments = () => {
-    let allDepartments = connection.query(`SELECT name FROM departments`, (err, res) => {
-        if (err) throw err;
-        let allDept = [];
-        for(i = 0; i < res.length; i++){
-            allDept.push(res[i].name)
-        }
-        return(allDept)
-    });    
-}
 
+
+// async function getAllDepartments() {
+//     let allDepartments = connection.query(`SELECT name FROM departments`, (err, res) => {
+//         if (err) throw err;
+//         let allDept = [];
+//         for(i = 0; i < res.length; i++){
+//             allDept.push(res[i].name)
+//         }
+//         return(allDept)
+//     });    
+// }
+getAllDepartments();
 const addData = () => {
     inquirer
         .prompt({
@@ -66,6 +68,7 @@ const addDepartment = () => {
      })
 }
 const addRole = () => {
+
     inquirer
      .prompt(
         {
@@ -73,14 +76,16 @@ const addRole = () => {
             type: "input",
             message:"What is the name of the new role?"
         }, 
-        {
-         name: 'deptChoice',
-         type: 'list',
-         message: 'What department will this role be added to?',
-         choices: getAllDepartments(),
-        }
+        
      )
      .then((answers) => {
+        let deptArray = getAllDepartments();
+        inquirer
+         .prompt({
+             name: 'departmentChoice',
+             message: `What department will ${answers.name} be a part of?`,
+             choices: deptArray,
+         })
          console.log(answers.name, "this is what you put in")
      })
 }

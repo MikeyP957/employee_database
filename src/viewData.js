@@ -40,9 +40,9 @@ const viewData = () => {
         })
 }
 
-const viewDepartment = () => {
+const viewDatabase = (dataBase) => {
     connection.query(
-        `SELECT name FROM departments`, 
+        `SELECT name FROM ${dataBase}`, 
         (err, res) => {
             if (err) throw err;
             
