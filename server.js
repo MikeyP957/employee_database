@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const cTable = require('console.table');
 // const Choice = require('inquirer/lib/objects/choice');
 
+
 //imported functions
 const addData = require('./src/addData');
 const updateData = require('./src/updateData');
@@ -18,7 +19,7 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
     if(err) throw err;
-    startEmployeeData();
+     startEmployeeData();
 })
 
 const startEmployeeData = () => {
@@ -27,7 +28,7 @@ const startEmployeeData = () => {
             name: 'AddViewUpdate',
             type: 'list',
             message: 'Would you like to Add, View or Update Data or exit?',
-            choices: ['Add','View', 'Update']
+            choices: ['Add','View', 'Update', 'Exit']
         })
         .then((answer) => {
             switch(answer.AddViewUpdate){
@@ -68,4 +69,6 @@ const startEmployeeData = () => {
 //     });    
 // }
 
-// getAllDepartments();
+
+
+
