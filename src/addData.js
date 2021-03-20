@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 
+const init = require('../init/init');
 // const viewDept = require('../lib/viewDept');
 
 const connection = mysql.createConnection({
@@ -41,19 +42,29 @@ const addData = () => {
 }
 const addDepartment= () => {
     inquirer
-     .prompt({
+     .prompt([
+        {
          name: 'department',
          type: 'input',
          message: 'What is the name of the department you would like to add?'
-     })
-     .then((answer) =>{
-         console.log(answer.department);
+        },
+        {
+            name: 'exit',
+            type: 'confirm',
+            message: 'Do you want to exit?'
+        }
+    ])
+     .then((answers) =>{
+         console.log(answers.department);
          let query = `INSERT INTO departments (name)
-         VALUES ('${answer.department}');`;
+         VALUES ('${answers.department}');`;
          connection.query(query, (err, res) => {
              if (err) throw err;
-             console.table(res)
          }) 
+         if (answers.exit){
+            connection.end;
+        }
+        else init();
      })
 }
 const addRole = () => {
@@ -74,6 +85,11 @@ const addRole = () => {
             type: 'list',
             message: `What department will this role be a part of?`,
             choices: ['Management', 'Engineers', 'Office Staff', 'Human Resources']
+        },
+        {
+            name: 'exit',
+            type: 'confirm',
+            message: 'Do you want to exit?'
         }
     ])
      .then((answers) => {
@@ -98,9 +114,14 @@ const addRole = () => {
         let query = `INSERT INTO roles (title, salary, department_id) VALUES ('${answers.title}', ${parseInt(answers.salary)}, ${dept_id()})`;
          connection.query(query, (err, res) => {
              if (err) throw err;
-             console.table(res)
-         }) 
+             
+         })
+         if (answers.exit){
+            connection.end;
+        }
+        else init();
      })
+     
 }
 
 const addEmployee = () => {
@@ -127,6 +148,11 @@ const addEmployee = () => {
             type: 'list',
             message: `Who is the manager for this employee?`,
             choices: ['Malik Sanders', 'Juana Ixcoy', 'No manager'],
+        },
+        {
+            name: 'exit',
+            type: 'confirm',
+            message: 'Do you want to exit?'
         }
     ])
      .then((answers) => {
@@ -172,8 +198,15 @@ const addEmployee = () => {
         let query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answers.first_name}', '${answers.last_name}', ${role_id()}, ${manager_id()})`;
          connection.query(query, (err, res) => {
              if (err) throw err;
-             console.table(res)
-         }) 
-     })
+             
+         })
+         if (answers.exit){
+            connection.end;
+        }
+        else init();
+    }) 
+     
+    
+ 
 }
 module.exports = addData;

@@ -3,6 +3,8 @@ const mysql = require('mysql');
 const startEmployeeData = require('../server')
 const cTable = require('console.table');
 
+const init = require('../init/init');
+
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
