@@ -190,13 +190,19 @@ const updateEmployee = () => {
         },
         {
             name: 'manager',
-            type: 'choices',
+            type: 'list',
             message: 'If they have a manager, who is it?',
             choices: ['Malik Sanders', 'Juana Ixcoy']
         },
     ])
      .then((answer) => {
-         
+         const managerId = () => {
+             if(answer.confirmManager) {
+                 let id = (employeeName.indexOf(answer.manager) +1)
+                 return `, manager_id = ${id}`
+             }
+            else return '';
+         }
         if(answer.delete) {
             let query = `DELETE FROM employee 
             WHERE id = ${employee_id(answer.roles)}`;
@@ -207,7 +213,7 @@ const updateEmployee = () => {
             })
          }
          else {
-            let query = `UPDATE roles SET title = '${answer.name}', salary = ${answer.salary}, department_id = ${dept_id(answer.department_id)}  WHERE id = ${role_id(answer.roles)}`;
+            let query = `UPDATE employee SET first_name = '${answer.first_name}', last_name = '${answer.last_name}', role_id = ${role_id(answer.role)} ${managerId()}  WHERE id = ${employee_id(answer.names)}`;
             
             connection.query(query, (err, res) => {
                 if (err) throw err;
