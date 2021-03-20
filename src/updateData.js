@@ -4,14 +4,30 @@ const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'Bongbros#221',
     database: "employee_db"
 });
 
 
-let departments = ['Developers', 'Managers', 'Human Resources', 'Office'];
-let roles = ['Engineer', 'Accountant', 'Manager', 'Administrative Assistent'];
-let employeeName = ['Malik', 'Theodore', 'Dinh', 'Mariam', 'Juana'];
+const dept_id = (departmentName) => {
+    deptId = (departments.indexOf(departmentName) +1)
+        
+    return deptId
+ } 
+
+ const role_id = (roleName) => {
+     let roleId = (roles.indexOf(roleName) +1)
+          
+     return roleId
+ };
+ const employee_id = (employee) => {
+    let employeeId = (employeeName.indexOf(employee) +1)
+         
+    return employeeId
+}
+let departments = ['Management', 'Engineers', 'Office Staff', 'Human Resources'];
+let roles = ['Manager', 'Frontend Developer', 'Backend Developer', 'Payroll Specialist', 'Administrative Assistent', 'Office Manager'];
+let employeeName = ['Malik Sanders', 'Juana Ixcoy', 'Xioaying Zhang', 'Yordanos Berhe', 'Quoc Nguyen', 'Eder Vasquez', 'Hinda Ali', 'Salma Awil', 'Gloria Simaj', 'Eduardo Rodriguez'];
 
 const updateData = () => {
     inquirer
@@ -43,38 +59,163 @@ const updateData = () => {
 }
 const updateDepartment = () => {
     inquirer
-     .prompt({
-        name: 'departments',
-        type: 'list',
-        message: 'What department would you like to update?',
-        choices: departments,
-     })
+     .prompt([
+        {
+            name: 'departments',
+            type: 'list',
+            message: 'What department would you like to update?',
+            choices: departments,
+         },
+         {
+            name: 'delete',
+            type: 'confirm',
+            message: 'Do you want to delete this department?'
+         },
+         {
+             name: 'name',
+             type: 'input',
+             message: 'What will the new name of this department be?'
+        }
+     ])
      .then((answer) => {
-         console.log(answer.departments , "this is who you chose")
+         //If they want to delete
+         if(answer.delete) {
+            let query = `DELETE FROM departments 
+            WHERE id = ${dept_id(answer.departments)}`;
+            
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.table(res)
+            })
+         }
+         else {
+            let query = `UPDATE departments SET name = '${answer.name}' WHERE id = ${dept_id(answer.departments)}`;
+            
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.table(res)
+            })
+         }
+         
      })
 }
 const updateRole = () => {
     inquirer
-     .prompt({
-        name: 'roles',
-        type: 'list',
-        message: 'What role would you like to update?',
-        choices: roles,
-     })
+     .prompt([
+         {
+            name: 'roles',
+            type: 'list',
+            message: 'What role would you like to update?',
+            choices: roles,
+        },
+        {
+            name: 'delete',
+            type: 'confirm',
+            message: 'Do you want to delete this role?'
+        },
+        {
+            name:'name',
+            type: 'input',
+            message: 'What will the name be for this role?'
+        },
+        {
+            name: 'salary',
+            type: 'number',
+            message: 'What will the new salary for this role be? Choose a number.',
+            
+        },
+        {
+            name: 'department_id',
+            type: 'list',
+            message: 'What department will this role be associated with?',
+            choices: departments
+        },
+     
+     ])
      .then((answer) => {
-         console.log(answer.roles , "this is who you chose")
+        if(answer.delete) {
+            let query = `DELETE FROM roles 
+            WHERE id = ${role_id(answer.roles)}`;
+            
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.table(res)
+            })
+         }
+         else {
+            let query = `UPDATE roles SET title = '${answer.name}', salary = ${answer.salary}, department_id = ${dept_id(answer.department_id)}  WHERE id = ${role_id(answer.roles)}`;
+            
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.table(res)
+            })
+         }
+
      })
 }
 const updateEmployee = () => {
     inquirer
-     .prompt({
+     .prompt([
+         {
         name: 'names',
         type: 'list',
         message: 'Whose would you like to update?',
         choices: employeeName,
-     })
+        },
+        {
+            name: 'delete',
+            type: 'confirm',
+            message: 'Do you want to delete this employee from the database?'
+        },
+        {
+            name: "first_name",
+            type: 'input',
+            message: "What is the employee's first name?"
+        },
+        {
+            name: 'last_name',
+            type: 'input',
+            message: "What is the employee's last name?"
+        },
+        {
+            name: 'role',
+            type: 'list',
+            message: "What is this employee's role?",
+            choices: roles
+        },
+        {
+            name: 'confirmManager',
+            type: 'confirm',
+            message: 'Do they have a manager?'
+        },
+        {
+            name: 'manager',
+            type: 'choices',
+            message: 'If they have a manager, who is it?',
+            choices: ['Malik Sanders', 'Juana Ixcoy']
+        },
+    ])
      .then((answer) => {
-         console.log(answer.names , "this is who you chose")
+         
+        if(answer.delete) {
+            let query = `DELETE FROM employee 
+            WHERE id = ${employee_id(answer.roles)}`;
+            
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.table(res)
+            })
+         }
+         else {
+            let query = `UPDATE roles SET title = '${answer.name}', salary = ${answer.salary}, department_id = ${dept_id(answer.department_id)}  WHERE id = ${role_id(answer.roles)}`;
+            
+            connection.query(query, (err, res) => {
+                if (err) throw err;
+                console.table(res)
+            })
+         }
+
+
      })
 }
 module.exports = updateData 
