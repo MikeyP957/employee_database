@@ -25,15 +25,15 @@ function init () {
         .then((answer) => {
             switch(answer.AddViewUpdate){
                 case 'Add':
-                    addData();
+                    addData(init);
                     break;
                 
                 case 'View':
-                    viewData();
+                    viewData(init);
                     break;
 
                 case 'Update':
-                    updateData();
+                    updateData(init);
                     break;
 
                 case 'Exit':

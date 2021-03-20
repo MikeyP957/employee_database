@@ -20,7 +20,7 @@ connection.connect((err) => {
     if(err) throw err;
      init();
 })
-
+console.log(init)
 
 
 

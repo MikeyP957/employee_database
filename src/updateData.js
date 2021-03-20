@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
-const init = require('../init/init');
+
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -30,7 +30,7 @@ let departments = ['Management', 'Engineers', 'Office Staff', 'Human Resources']
 let roles = ['Manager', 'Frontend Developer', 'Backend Developer', 'Payroll Specialist', 'Administrative Assistent', 'Office Manager'];
 let employeeName = ['Malik Sanders', 'Juana Ixcoy', 'Xioaying Zhang', 'Yordanos Berhe', 'Quoc Nguyen', 'Eder Vasquez', 'Hinda Ali', 'Salma Awil', 'Gloria Simaj', 'Eduardo Rodriguez'];
 
-const updateData = () => {
+const updateData = (init) => {
     inquirer
         .prompt({
             name: 'update',
@@ -41,15 +41,15 @@ const updateData = () => {
         .then((answer) => {
             switch(answer.update){
                 case 'Department':
-                    updateDepartment();
+                    updateDepartment(init);
                     break;
 
                 case 'Role':
-                    updateRole();
+                    updateRole(init);
                     break;
 
                 case 'Employee':
-                    updateEmployee();
+                    updateEmployee(init);
                     break;
 
                     default:
@@ -58,7 +58,7 @@ const updateData = () => {
             }
         })
 }
-const updateDepartment = () => {
+const updateDepartment = (init) => {
     inquirer
      .prompt([
         {
@@ -76,6 +76,11 @@ const updateDepartment = () => {
              name: 'name',
              type: 'input',
              message: 'What will the new name of this department be?'
+        },
+        {
+            name: 'exit',
+            type: 'confirm',
+            message: 'Do you want to exit?'
         }
      ])
      .then((answer) => {
@@ -97,10 +102,13 @@ const updateDepartment = () => {
                 console.table(res)
             })
          }
-         
+         if (answer.exit){
+            connection.end;
+        }
+        else init();
      })
 }
-const updateRole = () => {
+const updateRole = (init) => {
     inquirer
      .prompt([
          {
@@ -131,6 +139,11 @@ const updateRole = () => {
             message: 'What department will this role be associated with?',
             choices: departments
         },
+        {
+            name: 'exit',
+            type: 'confirm',
+            message: 'Do you want to exit?'
+        }
      
      ])
      .then((answer) => {
@@ -151,10 +164,13 @@ const updateRole = () => {
                 console.table(res)
             })
          }
-
+        if (answer.exit){
+            connection.end;
+        }
+        else init();
      })
 }
-const updateEmployee = () => {
+const updateEmployee = (init) => {
     inquirer
      .prompt([
          {
@@ -195,6 +211,11 @@ const updateEmployee = () => {
             message: 'If they have a manager, who is it?',
             choices: ['Malik Sanders', 'Juana Ixcoy']
         },
+        {
+            name: 'exit',
+            type: 'confirm',
+            message: 'Do you want to exit?'
+        }
     ])
      .then((answer) => {
          const managerId = () => {
@@ -221,7 +242,10 @@ const updateEmployee = () => {
                 console.table(res)
             })
          }
-
+         if (answer.exit){
+            connection.end;
+        }
+        else init();
 
      })
 }

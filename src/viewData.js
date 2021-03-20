@@ -3,17 +3,17 @@ const mysql = require('mysql');
 const startEmployeeData = require('../server')
 const cTable = require('console.table');
 
-const init = require('../init/init');
+
 
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'Bongbros#221',
     database: "employee_db"
 });
 
-const viewData = () => {
+const viewData = (init) => {
     inquirer
         .prompt({
             name: 'view',
@@ -24,15 +24,15 @@ const viewData = () => {
         .then((answer) => {
             switch(answer.view){
                 case 'Departments':
-                    viewDepartment();
+                    viewDepartment(init);
                     break;
 
                 case 'Roles':
-                    viewRole();
+                    viewRole(init);
                     break;
 
                 case 'Employees':
-                    viewEmployee();
+                    viewEmployee(init);
                     break;
 
                     default:
@@ -42,7 +42,7 @@ const viewData = () => {
         })
 }
 
-const viewDepartment = () => {
+const viewDepartment = (init) => {    
     connection.query(
         `SELECT name FROM departments`, 
         (err, res) => {
@@ -51,9 +51,23 @@ const viewDepartment = () => {
             console.table(res);
         }
     )
+    inquirer
+        .prompt([
+            {
+                name: 'exit',
+                type: 'confirm',
+                message: 'Do you want to exit?'
+            } 
+        ])
+        .then((answer) => {
+            if (answer.exit){
+                connection.end;
+            }
+            else init();
+        })
 }
 
-const viewRole = () => {
+const viewRole = (init) => {
     connection.query(
         `SELECT roles.title, roles.salary, departments.name
         FROM roles
@@ -64,8 +78,22 @@ const viewRole = () => {
             console.table(res);
         }
     )
+    inquirer
+        .prompt([
+            {
+                name: 'exit',
+                type: 'confirm',
+                message: 'Do you want to exit?'
+            } 
+        ])
+        .then((answer) => {
+            if (answer.exit){
+                connection.end;
+            }
+            else init();
+        })
 }
-const viewEmployee = () => {
+const viewEmployee = (init) => {
     connection.query(
         `SELECT employee.first_name, employee.last_name, roles.title
         FROM employee
@@ -76,5 +104,19 @@ const viewEmployee = () => {
             console.table(res);
         }
     )
+    inquirer
+        .prompt([
+            {
+                name: 'exit',
+                type: 'confirm',
+                message: 'Do you want to exit?'
+            } 
+        ])
+        .then((answer) => {
+            if (answer.exit){
+                connection.end;
+            }
+            else init();
+        })
 }
 module.exports = viewData 

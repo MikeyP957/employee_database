@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 
-const init = require('../init/init');
+
 // const viewDept = require('../lib/viewDept');
 
 const connection = mysql.createConnection({
@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
     database: "employee_db"
 });
 
-const addData = () => {
+const addData = (init) => {
     inquirer
         .prompt({
             name: 'add',
@@ -23,15 +23,15 @@ const addData = () => {
         .then((answer) => {
             switch(answer.add){
                 case 'Department':
-                    addDepartment();
+                    addDepartment(init);
                     break;
 
                 case 'Role':
-                    addRole();
+                    addRole(init);
                     break;
 
                 case 'Employee':
-                    addEmployee();
+                    addEmployee(init);
                     break;
 
                     default:
@@ -40,7 +40,7 @@ const addData = () => {
             }
         })
 }
-const addDepartment= () => {
+const addDepartment = (init) => {
     inquirer
      .prompt([
         {
@@ -67,7 +67,7 @@ const addDepartment= () => {
         else init();
      })
 }
-const addRole = () => {
+const addRole = (init) => {
     inquirer
      .prompt([
         {
@@ -124,7 +124,7 @@ const addRole = () => {
      
 }
 
-const addEmployee = () => {
+const addEmployee = (init) => {
     inquirer
      .prompt([
          {
