@@ -60,6 +60,7 @@ const addDepartment = (init) => {
          VALUES ('${answers.department}');`;
          connection.query(query, (err, res) => {
              if (err) throw err;
+             console.log(`You added ${answer.department} to the department table.`)
          }) 
          if (answers.exit){
             connection.end;
@@ -118,6 +119,7 @@ const addRole = (init) => {
          })
          if (answers.exit){
             connection.end;
+            console.log(`You added ${answers.title} to the table, with salary: ${answers.salary} in the ${answers.departmentChoice} department.`)
         }
         else init();
      })
@@ -198,7 +200,7 @@ const addEmployee = (init) => {
         let query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${answers.first_name}', '${answers.last_name}', ${role_id()}, ${manager_id()})`;
          connection.query(query, (err, res) => {
              if (err) throw err;
-             
+             console.log(`You added ${answers.first_name} ${answers.last_name} to the table, as a ${answers.role} with ${answers.manager} as a manager.`)
          })
          if (answers.exit){
             connection.end;
