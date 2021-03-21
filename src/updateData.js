@@ -91,7 +91,7 @@ const updateDepartment = (init) => {
             
             connection.query(query, (err, res) => {
                 if (err) throw err;
-                console.table(res)
+                console.log(`You deleted ${answer.departments} from the database`)
             })
          }
          else {
@@ -99,7 +99,7 @@ const updateDepartment = (init) => {
             
             connection.query(query, (err, res) => {
                 if (err) throw err;
-                console.table(res)
+                console.log(`You updated ${answer.departments} by changing the name to ${answer.name}`)
             })
          }
          if (answer.exit){
@@ -153,7 +153,7 @@ const updateRole = (init) => {
             
             connection.query(query, (err, res) => {
                 if (err) throw err;
-                console.table(res)
+                console.log(`You deleted role ${answer.roles}`)
             })
          }
          else {
@@ -161,7 +161,7 @@ const updateRole = (init) => {
             
             connection.query(query, (err, res) => {
                 if (err) throw err;
-                console.table(res)
+                console.log(`you updated ${answer.roles} to have title: ${answer.name}, salary = ${answer.salary}, in department ${answer.department_id}`)
             })
          }
         if (answer.exit){
@@ -231,7 +231,7 @@ const updateEmployee = (init) => {
             
             connection.query(query, (err, res) => {
                 if (err) throw err;
-                console.table(res)
+                console.log(`You deleted ${answer.names} from the table.`)
             })
          }
          else {
@@ -239,7 +239,7 @@ const updateEmployee = (init) => {
             
             connection.query(query, (err, res) => {
                 if (err) throw err;
-                console.table(res)
+                console.log(`You updated ${answer.names}'s information to have name ${answer.first_name} ${answer.last_name}, with position: ${answer.role}, and manager ${answer.managerId}`)
             })
          }
          if (answer.exit){
