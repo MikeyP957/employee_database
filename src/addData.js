@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: 'Bongbros#221',
+    password: '',
     database: "employee_db"
 });
 
@@ -60,7 +60,7 @@ const addDepartment = (init) => {
          VALUES ('${answers.department}');`;
          connection.query(query, (err, res) => {
              if (err) throw err;
-             console.log(`You added ${answer.department} to the department table.`)
+             console.log(`You added ${answers.department} to the department table.`)
          }) 
          if (answers.exit){
             connection.end;
